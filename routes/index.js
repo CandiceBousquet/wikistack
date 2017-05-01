@@ -8,6 +8,6 @@ router.get('/', function(req, res) {
 });
 
 router.use('/wiki', wikiRouter);
-
+router.use('/users', userRouter);
 
 module.exports = router;
