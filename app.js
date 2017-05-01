@@ -7,7 +7,7 @@ const router = require('./routes');
 const models = require('./models');
 const bodyparser = require('body-parser');
 
-models.db.sync()
+models.db.sync({force: true})
 .then(function () {
     // make sure to replace the name below with your express app
     app.listen(3000, function () {

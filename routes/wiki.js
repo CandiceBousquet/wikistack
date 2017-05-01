@@ -28,15 +28,17 @@ router.post('/', function(req, res, next) {
       email: req.body.authorEmail
     }
   })
-  .then(function(rows) {
-    var myUser = rows[0];
+  .then(function(user) {
+    var myUser = user[0];
+
     var page = Page.build({
       title: req.body.title,
       content: req.body.content
     });
-    return page.save().then(function (page) {
-      return page.setAuthor(myUser);
-    });
+    return page.save()
+               .then(function (page) {
+                  return page.setAuthor(myUser);
+               });
   })
   .then(function(persistedPage) {
     res.redirect(persistedPage.route);
@@ -56,22 +58,18 @@ router.get("/:urlTitle", function(req, res, next) {
   var result = Page.findOne({
     where: {
       urlTitle: req.params.urlTitle
-    }
-    // include: [{
-    //   model: User,
-    //   where: {
-    //     id: Sequelize.col('page.authorId')
-    //   }
-    // }],
-    // include: [User]
+    },
+    include: [{
+      model: User, as: 'author'
+    }]
   });
 
   result.then(function(row) {
-    console.log(row);
+    // console.log(row.author.name);
     const localVars = {
       content: row.content,
       title: row.title,
-      authorName: row.name
+      authorName: row.author.name,
     };
     res.render('./wikipage.html', localVars);
   })
