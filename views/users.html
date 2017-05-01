@@ -5,7 +5,7 @@
   <hr>
   <ul class="list-unstyled">
  	{% for user in users %}
-    	<li><a href="/users/{{ user.id }}">{{ user.name }}</a></li>
-  	{% endfor %}
+    <li><a href="/users/{{ user.id }}">{{ user.name }}</a></li>
+  {% endfor %}
   </ul>
 {% endblock %}
