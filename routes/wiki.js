@@ -64,11 +64,11 @@ router.get("/:urlTitle", function(req, res, next) {
   });
 
   result.then(function(row) {
-    // console.log(row.author.name);
     const localVars = {
       content: row.content,
       title: row.title,
       authorName: row.author.name,
+      authorId: row.authorId
     };
     res.render('./wikipage.html', localVars);
   })
